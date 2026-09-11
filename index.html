@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hermes — 24/7 AI Employees for Content & Lead Generation</title>
+<meta name="description" content="Hermes agents work around the clock producing Instagram carousels, Reels, YouTube videos, ads — and scouting your competitors. One team, always on.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --ink:#111111; --dim:#5f5f5f; --hair:#e6e6e6; --hair2:#f0f0f0;
+  --black:#0a0a0a; --paper:#fafafa;
+  --serif:'Newsreader',Georgia,serif; --sans:'Inter',-apple-system,sans-serif;
+  --ease:cubic-bezier(.22,.61,.21,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:#111;color:#fff}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.08;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 32px}
+
+/* ── reveal system ── */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.40s}
+
+/* ── nav ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--hair);transition:transform .5s var(--ease)}
+nav.hidden{transform:translateY(-100%)}
+.nav-in{max-width:1120px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:16px;letter-spacing:-.01em}
+.brand img{width:30px;height:30px;border-radius:7px}
+.nav-links{display:flex;gap:26px;align-items:center;font-size:14.5px;color:var(--dim)}
+.nav-links a{transition:color .25s}
+.nav-links a:hover{color:var(--ink)}
+.cta-top{background:var(--black);color:#fff !important;padding:8px 18px;border-radius:99px;font-weight:500;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.cta-top:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.18)}
+
+/* ── hero ── */
+header{min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.14;filter:grayscale(1) contrast(1.08)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.2) 45%,#fff 96%)}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero-in{position:relative;z-index:2;padding-top:96px}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:26px}
+.kicker::before{content:"";width:26px;height:1px;background:var(--ink);display:inline-block}
+h1.hero{font-size:clamp(44px,7.2vw,92px);letter-spacing:-.025em;max-width:11ch}
+h1.hero em{font-style:italic;color:var(--dim)}
+.hero-sub{margin-top:28px;font-size:19px;color:var(--dim);max-width:52ch}
+.hero-cta{margin-top:40px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--black);color:#fff;padding:15px 30px;border-radius:99px;font-size:16px;font-weight:500;transition:transform .35s var(--ease),box-shadow .35s var(--ease);position:relative;overflow:hidden}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair);box-shadow:none}
+.btn.ghost:hover{border-color:var(--ink)}
+.hero-meta{margin-top:56px;display:flex;gap:40px;color:var(--dim);font-size:14px}
+.hero-meta b{color:var(--ink);font-weight:600}
+
+/* live clock strip */
+.clock{position:absolute;bottom:34px;left:0;right:0;z-index:2}
+.clock-in{max-width:1120px;margin:0 auto;padding:0 32px;display:flex;justify-content:space-between;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#111;margin-right:8px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+
+/* ── marquee ── */
+.marquee{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);overflow:hidden;padding:18px 0;background:var(--paper)}
+.mq-track{display:flex;gap:64px;white-space:nowrap;animation:mq 30s linear infinite;width:max-content}
+.mq-track span{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:64px}
+.mq-track span::after{content:"—";color:var(--hair)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ── sections ── */
+section{padding:120px 0}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--ink)}
+h2{font-size:clamp(32px,4.6vw,56px);letter-spacing:-.02em;max-width:20ch}
+.lede{margin-top:20px;color:var(--dim);font-size:18px;max-width:56ch}
+
+/* workforce grid */
+.grid{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair)}
+.cell{background:#fff;padding:36px 30px;position:relative;transition:background .4s}
+.cell:hover{background:var(--black);color:#fff}
+.cell:hover .c-num, .cell:hover p{color:rgba(255,255,255,.6)}
+.cell .c-num{font-size:12px;letter-spacing:.14em;color:var(--dim);margin-bottom:34px;transition:color .4s}
+.cell h3{font-size:24px;margin-bottom:12px}
+.cell p{font-size:15.5px;color:var(--dim);transition:color .4s}
+.cell .arrow{position:absolute;top:32px;right:28px;opacity:0;transform:translate(-6px,6px);transition:all .35s var(--ease);font-size:20px}
+.cell:hover .arrow{opacity:1;transform:none}
+
+/* how it flows */
+.flow{margin-top:70px;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--hair)}
+.step{padding:34px 26px 0 0;position:relative}
+.step::before{content:"";position:absolute;top:-1px;left:0;width:38px;height:3px;background:var(--ink)}
+.step .s-num{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--dim)}
+.step h3{font-size:21px;margin:10px 0 8px}
+.step p{font-size:14.5px;color:var(--dim)}
+
+/* outputs showcase */
+.shows{margin-top:64px;display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.show-card{position:relative;border:1px solid var(--hair);background:var(--paper);overflow:hidden;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.show-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px rgba(0,0,0,.10)}
+.show-card .sc-img{aspect-ratio:16/10;overflow:hidden}
+.show-card .sc-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:transform 1.2s var(--ease)}
+.show-card:hover .sc-img img{transform:scale(1.045)}
+.sc-body{padding:26px 28px 30px}
+.sc-body h3{font-size:23px}
+.sc-body p{margin-top:8px;color:var(--dim);font-size:15.5px}
+.tagrow{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{font-size:12px;letter-spacing:.06em;padding:5px 12px;border:1px solid var(--hair);border-radius:99px;color:var(--dim);background:#fff}
+
+/* competitor intel */
+.intel{background:var(--black);color:#fff}
+.intel .eyebrow{color:rgba(255,255,255,.55)}
+.intel .eyebrow::before{background:#fff}
+.intel .lede{color:rgba(255,255,255,.62)}
+.intel-grid{margin-top:60px;display:grid;grid-template-columns:1.05fr 1fr;gap:64px;align-items:center}
+.term{border:1px solid rgba(255,255,255,.16);border-radius:14px;overflow:hidden;background:#111;font-size:13px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.term-bar{display:flex;gap:6px;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.12)}
+.term-bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.22)}
+.term-body{padding:20px 22px;font-family:ui-monospace,'SF Mono',Menlo,monospace;line-height:1.9;color:rgba(255,255,255,.78);white-space:pre-wrap}
+.t-dim{color:rgba(255,255,255,.35)}
+.t-ok{color:#9fff9f}
+.t-hl{color:#fff;font-weight:600}
+.term-cursor{display:inline-block;width:8px;height:15px;background:#fff;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.intel-list{display:grid;gap:0;margin-top:8px}
+.intel-item{padding:22px 0;border-bottom:1px solid rgba(255,255,255,.13);display:flex;gap:18px;align-items:baseline}
+.intel-item:first-child{border-top:1px solid rgba(255,255,255,.13)}
+.intel-item .n{font-family:var(--serif);font-style:italic;color:rgba(255,255,255,.4);font-size:15px;min-width:28px}
+.intel-item h3{font-size:19px}
+.intel-item p{color:rgba(255,255,255,.58);font-size:14.5px;margin-top:4px}
+
+/* always-on strip */
+.alwayson{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;margin-top:60px}
+.ao{border-top:1px solid var(--hair);padding-top:26px}
+.ao .t{font-family:ui-monospace,Menlo,monospace;font-size:26px;letter-spacing:-.02em}
+.ao p{color:var(--dim);font-size:14.5px;margin-top:8px}
+
+/* pricing / engagement */
+.plans{margin-top:64px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair)}
+.plan{background:#fff;padding:40px 34px;position:relative;transition:background .4s,color .4s}
+.plan:hover{background:var(--black);color:#fff}
+.plan:hover .p-d, .plan:hover .p-price small{color:rgba(255,255,255,.55)}
+.plan h3{font-size:22px}
+.plan .p-for{font-size:13.5px;color:var(--dim);margin-top:4px;transition:color .4s}
+.p-price{margin:26px 0;font-family:var(--serif);font-size:44px;letter-spacing:-.02em}
+.p-price small{font-size:15px;color:var(--dim);font-family:var(--sans);transition:color .4s}
+.p-list{list-style:none;display:grid;gap:11px;font-size:14.5px}
+.p-list li{padding-left:20px;position:relative;color:inherit}
+.p-list li::before{content:"—";position:absolute;left:0;opacity:.4}
+.plan.hot{background:var(--paper)}
+.plan.hot:hover{background:var(--black)}
+
+/* final cta */
+.final{background:var(--black);color:#fff;text-align:center;position:relative;overflow:hidden}
+.final .eyebrow{justify-content:center;color:rgba(255,255,255,.5)}
+.final .eyebrow::before{background:#fff}
+.final h2{margin:0 auto;max-width:24ch;font-size:clamp(36px,5.6vw,68px)}
+.final .lede{margin:22px auto 0;color:rgba(255,255,255,.6)}
+.final .btn{margin-top:40px;background:#fff;color:var(--black);padding:17px 38px;font-size:17px}
+.final .btn:hover{box-shadow:0 14px 40px rgba(255,255,255,.18)}
+.final .fine{margin-top:18px;font-size:13px;color:rgba(255,255,255,.4)}
+
+/* footer */
+footer{border-top:1px solid var(--hair);padding:44px 0 54px;font-size:13.5px;color:var(--dim)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot .brand{font-size:14px;color:var(--ink)}
+.foot .brand img{width:24px;height:24px;border-radius:6px}
+
+/* mobile */
+@media (max-width:900px){
+  .grid,.shows,.plans{grid-template-columns:1fr 1fr}
+  .flow{grid-template-columns:1fr 1fr;gap:28px 0}
+  .intel-grid{grid-template-columns:1fr;gap:44px}
+  .alwayson{grid-template-columns:1fr;gap:30px}
+  .nav-links a:not(.cta-top){display:none}
+}
+@media (max-width:620px){
+  section{padding:84px 0}
+  .wrap{padding:0 22px}
+  .nav-in{padding:12px 22px}
+  .grid,.shows,.plans{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .hero-meta{gap:22px;flex-wrap:wrap}
+  .clock-in{padding:0 22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav id="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top"><img src="assets/logo-web.png" alt="Hermes logo"> Hermes</a>
+    <div class="nav-links">
+      <a href="#workforce">The Team</a>
+      <a href="#outputs">Output</a>
+      <a href="#intel">Competitor Intel</a>
+      <a href="#always">Always On</a>
+      <a class="cta-top" href="#book">Book a call</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="hero-bg"><img src="assets/hero.jpg" alt=""></div>
+  <div class="wrap hero-in">
+    <div class="kicker rv">Hermes Agents · 24/7 AI Employees</div>
+    <h1 class="hero rv d1">Your team, that <em>never sleeps.</em></h1>
+    <p class="hero-sub rv d2">Hermes agents produce your content and run your lead-generation systems around the clock — carousels, Reels, YouTube videos, clips, ads — while scouting your competitors on schedule. One calm subscription. Zero burnout.</p>
+    <div class="hero-cta rv d3">
+      <a class="btn" href="#book">Book a call
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a class="btn ghost" href="#workforce">Meet the team</a>
+    </div>
+    <div class="hero-meta rv d4">
+      <div><b>24/7</b> — always on shift</div>
+      <div><b>6-model</b> — reviewed output</div>
+      <div><b>Daily</b> — competitor intel</div>
+    </div>
+  </div>
+  <div class="clock">
+    <div class="clock-in">
+      <span><span class="dot"></span>Agents on duty now</span>
+      <span id="utc">— UTC</span>
+    </div>
+  </div>
+</header>
+
+<div class="marquee">
+  <div class="mq-track" id="mq">
+    <span>Instagram Carousels</span><span>Reels</span><span>YouTube Long-form</span><span>Shorts &amp; Clips</span><span>Ad Creatives</span><span>Lead Magnets</span><span>Competitor Scouting</span><span>Outreach Systems</span>
+  </div>
+</div>
+
+<section id="workforce">
+  <div class="wrap">
+    <div class="eyebrow rv">The Team</div>
+    <h2 class="rv d1">Six specialists. One payroll line.</h2>
+    <p class="lede rv d2">Each Hermes agent is a focused operator with its own tools, memory and schedule — supervised by a reviewing editor so nothing ships sloppy.</p>
+    <div class="grid">
+      <div class="cell rv"><div class="c-num">01 — CONTENT</div><h3>Carousel Writer</h3><p>Instagram carousels with editorial hooks, clean typography and a consistent visual system — drafted, reviewed, and posted on schedule.</p><span class="arrow">→</span></div>
+      <div class="cell rv d1"><div class="c-num">02 — CONTENT</div><h3>Reels Producer</h3><p>Short-form video: scripts, cuts, captions and covers. Trend-aware, brand-consistent, shipped daily without a human editor.</p><span class="arrow">→</span></div>
+      <div class="cell rv d2"><div class="c-num">03 — CONTENT</div><h3>YouTube Studio</h3><p>Long-form videos plus the clip pipeline — every video becomes ten shorts, titled, chaptered and packaged for search.</p><span class="arrow">→</span></div>
+      <div class="cell rv d3"><div class="c-num">04 — GROWTH</div><h3>Ad Maker</h3><p>Ad creatives in every ratio, headline variants for testing, and honest performance readouts back into the next batch.</p><span class="arrow">→</span></div>
+      <div class="cell rv d4"><div class="c-num">05 — INTEL</div><h3>Competitor Scout</h3><p>Crawls competitor sites, funnels and socials with Firecrawl-class tooling — and files a daily intelligence brief.</p><span class="arrow">→</span></div>
+      <div class="cell rv d5"><div class="c-num">06 — PIPELINE</div><h3>Lead Engineer</h3><p>Builds the lead-gen machine: lead magnets, capture pages, qualification flows and outreach sequences that actually follow up.</p><span class="arrow">→</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="outputs" style="padding-top:40px">
+  <div class="wrap">
+    <div class="eyebrow rv">Output</div>
+    <h2 class="rv d1">Work you can publish, not prompts to babysit.</h2>
+    <p class="lede rv d2">Every deliverable passes a multi-model review before it reaches you. You approve; the team ships.</p>
+    <div class="shows">
+      <div class="show-card rv"><div class="sc-img"><img src="assets/show1.jpg" alt="Editorial monochrome artwork — carousel system"></div>
+        <div class="sc-body"><h3>Social Content Systems</h3><p>Carousels and Reels built as a series, not one-offs — consistent grids, recurring formats, an audience that recognizes you.</p>
+        <div class="tagrow"><span class="tag">Instagram</span><span class="tag">Carousels</span><span class="tag">Reels</span><span class="tag">Covers</span></div></div>
+      </div>
+      <div class="show-card rv d1"><div class="sc-img"><img src="assets/show2.jpg" alt="Monochrome paper-cut composition — video pipeline"></div>
+        <div class="sc-body"><h3>Video &amp; Ads Pipeline</h3><p>YouTube long-form sliced into clips, plus ad variants sized for every placement — one brief becomes a full week of media.</p>
+        <div class="tagrow"><span class="tag">YouTube</span><span class="tag">Shorts</span><span class="tag">Ads</span><span class="tag">Scripts</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="intel" class="intel">
+  <div class="wrap">
+    <div class="eyebrow rv">Competitor Intel</div>
+    <h2 class="rv d1" style="color:#fff">They watch, so you don't have to.</h2>
+    <div class="intel-grid">
+      <div class="rv d1">
+        <div class="term">
+          <div class="term-bar"><i></i><i></i><i></i></div>
+          <div class="term-body"><span class="t-dim">$</span> hermes scout --run daily<br>
+<span class="t-dim">→ crawling 14 competitor domains via Firecrawl…</span><br>
+<span class="t-ok">✓ pricing pages      3 changes detected</span><br>
+<span class="t-ok">✓ new lead magnet   rival-01 /g/ checklist</span><br>
+<span class="t-ok">✓ ad library        7 new creatives indexed</span><br>
+<span class="t-ok">✓ funnel rewrite    checkout now 2-step</span><br>
+<span class="t-hl">→ brief filed: 2026-09-11-competitor-intel.md</span><br>
+<span class="t-dim">→ delivered to your inbox, 07:00 GMT</span> <span class="term-cursor"></span></div>
+        </div>
+      </div>
+      <div class="intel-list rv d2">
+        <div class="intel-item"><span class="n">i.</span><div><h3>Daily crawl briefs</h3><p>Pricing, funnels, copy changes and new offers — summarized in plain language every morning.</p></div></div>
+        <div class="intel-item"><span class="n">ii.</span><div><h3>Ad &amp; content tracking</h3><p>New creatives and posts indexed automatically, so their tests become your research.</p></div></div>
+        <div class="intel-item"><span class="n">iii.</span><div><h3>Gap reports</h3><p>What they publish vs what they miss — your agent flags the openings worth taking.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="always">
+  <div class="wrap">
+    <div class="eyebrow rv">Always On</div>
+    <h2 class="rv d1">Working while you sleep.</h2>
+    <p class="lede rv d2">Scheduled shifts, not vibes. The team runs on cron — publish windows, crawl windows, review windows — and reports what it did.</p>
+    <div class="alwayson">
+      <div class="ao rv"><div class="t">07:00</div><p>Competitor brief lands. Today's opportunities, ranked.</p></div>
+      <div class="ao rv d1"><div class="t">12:00</div><p>Content batch reviewed and queued — carousels, clips, ad variants.</p></div>
+      <div class="ao rv d2"><div class="t">22:00</div><p>End-of-day report: what shipped, what performed, what's next.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="engage">
+  <div class="wrap">
+    <div class="eyebrow rv">Engagement</div>
+    <h2 class="rv d1">Simple terms, senior output.</h2>
+    <div class="plans">
+      <div class="plan rv"><h3>Starter</h3><div class="p-for">one channel, running</div><div class="p-price">$900<small>/mo</small></div>
+        <ul class="p-list"><li>1 content agent (your pick)</li><li>Daily output, human-approved</li><li>Weekly competitor brief</li><li>Monthly strategy call</li></ul></div>
+      <div class="plan hot rv d1"><h3>Growth</h3><div class="p-for">the full team</div><div class="p-price">$2,400<small>/mo</small></div>
+        <ul class="p-list"><li>All 6 agents, supervised</li><li>Carousels + Reels + YouTube + ads</li><li>Daily competitor intel</li><li>Lead-gen system build &amp; run</li><li>Slack/Telegram access to the team</li></ul></div>
+      <div class="plan rv d2"><h3>Custom</h3><div class="p-for">your stack, your rules</div><div class="p-price">Let's talk</div>
+        <ul class="p-list"><li>Custom agent roles</li><li>Private tooling &amp; data</li><li>White-label output</li><li>SLA &amp; on-prem options</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="final">
+  <div class="wrap">
+    <div class="eyebrow rv">Book a Call</div>
+    <h2 class="rv d1">Hire your first AI employee this week.</h2>
+    <p class="lede rv d2">A 20-minute call: we map your content and lead-gen goals to a team, and you leave with a launch plan — whether or not you hire us.</p>
+    <a class="btn rv d3" href="https://cal.com/hermes-agents/intro">Book a call
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <div class="fine rv d4">No commitment. Bring your hardest content problem.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top"><img src="assets/logo-web.png" alt="Hermes logo"> Hermes Agents</a>
+    <span>24/7 AI employees for content &amp; lead generation</span>
+    <span>© 2026 Hermes</span>
+  </div>
+</footer>
+
+<script>
+// reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.14});
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// hide nav on scroll down, show on up
+let lastY = 0;
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => {
+  const y = scrollY;
+  if (y > 300 && y > lastY + 8) nav.classList.add('hidden');
+  else if (y < lastY - 4 || y < 300) nav.classList.remove('hidden');
+  lastY = y;
+}, {passive:true});
+
+// live UTC clock
+const utc = document.getElementById('utc');
+function tick(){ const d = new Date(); utc.textContent = d.toUTCString().slice(17,25) + ' UTC'; }
+tick(); setInterval(tick, 1000);
+
+// duplicate marquee content for seamless loop
+const mq = document.getElementById('mq');
+mq.innerHTML += mq.innerHTML;
+
+// subtle hero parallax
+const heroBg = document.querySelector('.hero-bg img');
+addEventListener('scroll', () => {
+  if (scrollY < innerHeight) heroBg.style.transform = `translateY(${scrollY * .12}px)`;
+}, {passive:true});
+</script>
+</body>
+</html>
