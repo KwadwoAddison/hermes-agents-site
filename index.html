@@ -214,7 +214,7 @@ footer{border-top:1px solid var(--hair);padding:44px 0 54px;font-size:13.5px;col
 
 <header id="top">
   <div class="hero-bg">
-    <video autoplay muted loop playsinline poster="assets/hero.jpg"><source src="assets/hero.mp4" type="video/mp4"></video>
+    <video autoplay muted loop playsinline preload="auto" poster="assets/hero.jpg"><source src="assets/hero.mp4" type="video/mp4"></video>
   </div>
   <div class="wrap hero-in">
     <div class="kicker rv">Hermes Agents · 24/7 AI Employees</div>
@@ -378,6 +378,10 @@ tick(); setInterval(tick, 1000);
 // duplicate marquee content for seamless loop
 const mq = document.getElementById('mq');
 mq.innerHTML += mq.innerHTML;
+
+// ensure hero video plays even if autoplay attr is ignored
+const heroVid = document.querySelector('.hero-bg video');
+if (heroVid) { heroVid.play().catch(()=>{}); document.addEventListener('visibilitychange', () => { if (!document.hidden) heroVid.play().catch(()=>{}); }); }
 
 // subtle hero parallax
 const heroBg = document.querySelector('.hero-bg video');
