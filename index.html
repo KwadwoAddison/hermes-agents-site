@@ -45,7 +45,7 @@ nav.hidden{transform:translateY(-100%)}
 /* ── hero ── */
 header{min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.14;filter:grayscale(1) contrast(1.08)}
+.hero-bg img,.hero-bg video{width:100%;height:100%;object-fit:cover;opacity:.14;filter:grayscale(1) contrast(1.08)}
 .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.2) 45%,#fff 96%)}
 .grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .hero-in{position:relative;z-index:2;padding-top:96px}
@@ -213,7 +213,9 @@ footer{border-top:1px solid var(--hair);padding:44px 0 54px;font-size:13.5px;col
 </nav>
 
 <header id="top">
-  <div class="hero-bg"><img src="assets/hero.jpg" alt=""></div>
+  <div class="hero-bg">
+    <video autoplay muted loop playsinline poster="assets/hero.jpg"><source src="assets/hero.mp4" type="video/mp4"></video>
+  </div>
   <div class="wrap hero-in">
     <div class="kicker rv">Hermes Agents · 24/7 AI Employees</div>
     <h1 class="hero rv d1">Your team, that <em>never sleeps.</em></h1>
@@ -378,7 +380,7 @@ const mq = document.getElementById('mq');
 mq.innerHTML += mq.innerHTML;
 
 // subtle hero parallax
-const heroBg = document.querySelector('.hero-bg img');
+const heroBg = document.querySelector('.hero-bg video');
 addEventListener('scroll', () => {
   if (scrollY < innerHeight) heroBg.style.transform = `translateY(${scrollY * .12}px)`;
 }, {passive:true});
