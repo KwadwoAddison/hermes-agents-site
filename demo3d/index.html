@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>window.__err=[];window.addEventListener("error",e=>{document.title="ERR:"+String(e.message||e).slice(0,120);});</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Weight of 276 — a data sculpture</title>
+<style>
+  :root{
+    --bg:#0b0c0e; --ink:#e8e4da; --dim:#9a958a; --brass:#c49a4e; --teal:#3fbdb8; --crimson:#c25a50;
+    --serif:'Iowan Old Style','Palatino Linotype',Georgia,serif; --sans:-apple-system,'Helvetica Neue',sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:auto}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
+  #stage{position:fixed;inset:0;z-index:0}
+  canvas{display:block}
+  .grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E")}
+  section{position:relative;z-index:3;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:0 clamp(24px,7vw,110px);pointer-events:none}
+  section .inner{max-width:620px}
+  .eyebrow{font:600 11px/1 var(--sans);letter-spacing:.34em;text-transform:uppercase;color:var(--brass);margin-bottom:22px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(52px,9vw,124px);line-height:.98;letter-spacing:-.01em}
+  h1 .num{color:var(--brass);font-variant-numeric:tabular-nums}
+  .lede{margin-top:26px;font:400 clamp(15px,1.6vw,19px)/1.65 var(--sans);color:var(--dim);max-width:46ch}
+  .rule{width:56px;height:1px;background:var(--brass);opacity:.7;margin:30px 0 0}
+  .scrollcue{position:absolute;bottom:34px;left:clamp(24px,7vw,110px);font:500 11px/1 var(--sans);
+    letter-spacing:.28em;text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px}
+  .scrollcue::after{content:'';width:1px;height:34px;background:linear-gradient(var(--brass),transparent);
+    animation:drop 2.2s ease-in-out infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}
+    56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+  /* chapters */
+  .chapter{justify-content:flex-end;padding-bottom:16vh}
+  .chapter .k{font:600 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+  .chapter h2{font-family:var(--serif);font-weight:500;font-size:clamp(38px,5.6vw,72px);line-height:1.04}
+  .chapter h2 em{font-style:normal;color:var(--brass);font-variant-numeric:tabular-nums}
+  .chapter p{margin-top:18px;font:400 16px/1.7 var(--sans);color:var(--dim);max-width:44ch}
+  .ghost{position:absolute;right:clamp(24px,8vw,130px);top:50%;transform:translateY(-50%);
+    font-family:var(--serif);font-size:clamp(120px,22vw,300px);line-height:1;color:transparent;
+    -webkit-text-stroke:1px rgba(196,154,78,.16);font-variant-numeric:tabular-nums;user-select:none}
+  /* closing */
+  .closing{justify-content:center;align-items:center;text-align:center}
+  .closing h2{font-family:var(--serif);font-weight:500;font-size:clamp(40px,6vw,84px);line-height:1.06;max-width:18ch}
+  .closing h2 em{font-style:normal;color:var(--brass)}
+  .closing p{margin-top:24px;color:var(--dim);font:400 15px/1.7 var(--sans);max-width:52ch}
+  .credit{position:fixed;bottom:18px;right:22px;z-index:4;font:500 10px/1 var(--sans);
+    letter-spacing:.22em;text-transform:uppercase;color:rgba(154,149,138,.55);pointer-events:none}
+  #load{position:fixed;inset:0;z-index:9;background:var(--bg);display:flex;align-items:center;justify-content:center;
+    flex-direction:column;gap:18px;transition:opacity .9s ease}
+  #load .t{font:600 11px/1 var(--sans);letter-spacing:.34em;text-transform:uppercase;color:var(--dim)}
+  #load .bar{width:160px;height:1px;background:rgba(255,255,255,.12);overflow:hidden}
+  #load .bar i{display:block;height:100%;width:0;background:var(--brass);transition:width .4s ease}
+  @media (max-width:640px){ .ghost{display:none} section{padding-bottom:12vh} }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div class="grain"></div>
+
+<section id="s0">
+  <div class="inner">
+    <div class="eyebrow">Kath · MbU · Verified cohort · 2026</div>
+    <h1>The weight of <span class="num" data-count="276">0</span></h1>
+    <p class="lede">Two hundred and seventy-six rings. One for every infant death recorded in the
+      neonatal unit audit. A sculpture you can turn in your hand — built from the register itself.</p>
+    <div class="rule"></div>
+  </div>
+  <div class="scrollcue">Scroll · the tower opens</div>
+</section>
+
+<section id="s1" class="chapter">
+  <div class="inner">
+    <div class="k">Within 24 hours</div>
+    <h2><em class="num" data-count="41">0</em> never left their first day.</h2>
+    <p>The densest, darkest rings — tightened at the base of the stack. Fifteen percent of the
+      cohort died within twenty-four hours of admission.</p>
+  </div>
+  <div class="ghost">41</div>
+</section>
+
+<section id="s2" class="chapter">
+  <div class="inner">
+    <div class="k">The first week</div>
+    <h2><em class="num" data-count="178">0</em> within one week.</h2>
+    <p>Brass rings — 65 percent of all recorded ages fall inside seven days. The tower's warm
+      metal is the shape of that first week.</p>
+  </div>
+  <div class="ghost">178</div>
+</section>
+
+<section id="s3" class="chapter">
+  <div class="inner">
+    <div class="k">After the first week</div>
+    <h2><em class="num" data-count="96">0</em> lived past seven days.</h2>
+    <p>Ink rings, full radius — the longest survivors of the cohort, still far too many.</p>
+  </div>
+  <div class="ghost">96</div>
+</section>
+
+<section id="s4" class="chapter">
+  <div class="inner">
+    <div class="k">Unrecorded</div>
+    <h2><em class="num" data-count="2">0</em> ages were never written down.</h2>
+    <p>Near the base, a glass ring with a teal seam: the two deaths whose age at death the
+      register does not carry. A record-keeping gap you can see.</p>
+  </div>
+  <div class="ghost">2</div>
+</section>
+
+<section id="s5" class="closing">
+  <div class="inner" style="max-width:none">
+    <div class="eyebrow" style="letter-spacing:.34em">An association, not proof of cause</div>
+    <h2>Every ring is a record.<br>Not a statistic.</h2>
+    <p>Data sculpture generated from the verified neonatal audit cohort — 1,828 admissions,
+      276 deaths. Built with Blender + three.js; the model in the background is the actual
+      geometry, not a video.</p>
+  </div>
+</section>
+
+<div class="credit">276 · Blender → glTF → WebGL</div>
+
+<div id="load"><div class="t">Assembling 276 rings</div><div class="bar"><i id="loadbar"></i></div></div>
+
+<script type="importmap">
+{"imports":{"three":"./three.module.min.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
+import { DRACOLoader } from './jsm/loaders/DRACOLoader.js';
+
+const stage = document.getElementById('stage');
+const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.15;
+stage.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0b0c0e, 0.028);
+const camera = new THREE.PerspectiveCamera(38, innerWidth/innerHeight, .1, 200);
+
+// lights (match the render's studio mood)
+scene.add(new THREE.AmbientLight(0x334, 1.2));
+const key = new THREE.DirectionalLight(0xfff2dc, 2.6); key.position.set(-8, 14, -6); scene.add(key);
+const rim = new THREE.DirectionalLight(0xc49a4e, 2.2); rim.position.set(9, 6, 8); scene.add(rim);
+const fill = new THREE.DirectionalLight(0x3fbdb8, .5); fill.position.set(0, -6, 6); scene.add(fill);
+
+// sculpture group
+const sculpture = new THREE.Group(); scene.add(sculpture);
+const H = 33.67;            // tower height from build
+const TOWER_MID = H/2;
+
+// floor reflection fake: dark disc
+const floor = new THREE.Mesh(
+  new THREE.CircleGeometry(40, 48),
+  new THREE.MeshStandardMaterial({color:0x08090b, roughness:.42, metalness:.55})
+);
+floor.rotation.x = -Math.PI/2; floor.position.y = -0.45; scene.add(floor);
+
+// load GLB (DRACO)
+const draco = new DRACOLoader();
+draco.setDecoderPath('./draco/');
+const loader = new GLTFLoader(); loader.setDRACOLoader(draco);
+let ringsReady = false;
+loader.load('./weight_of_276.glb', (gltf)=>{ document.title='LOADED';
+  const model = gltf.scene;
+  // center tower at origin, base at y=0
+  const box = new THREE.Box3().setFromObject(model);
+  model.position.y = -box.min.y;
+  sculpture.add(model);
+  ringsReady = true;
+  document.getElementById('loadbar').style.width = '100%';
+  setTimeout(()=>{ const l=document.getElementById('load'); l.style.opacity=0; setTimeout(()=>l.remove(), 900); }, 350);
+}, (ev)=>{ if(ev.total) document.getElementById('loadbar').style.width = Math.round(ev.loaded/ev.total*90)+'%'; }, (err)=>{ document.title='LOADFAIL:'+String(err).slice(0,80); });
+
+// ---- interaction state ----
+const mouse = {x:0, y:0, tx:0, ty:0};
+addEventListener('pointermove', e=>{
+  mouse.tx = (e.clientX/innerWidth - .5)*2;
+  mouse.ty = (e.clientY/innerHeight - .5)*2;
+});
+
+// scroll progress 0..1
+let prog = 0;
+function scrollProg(){
+  const max = document.body.scrollHeight - innerHeight;
+  prog = max>0 ? Math.min(1, scrollY/max) : 0;
+}
+addEventListener('scroll', scrollProg, {passive:true}); scrollProg();
+
+function ease(t){ return t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
+
+// count-up numbers when visible
+const io = new IntersectionObserver(es=>{
+  es.forEach(en=>{
+    if(!en.isIntersecting) return;
+    const el = en.target, target = +el.dataset.count, dur = 1400, t0 = performance.now();
+    const tick = (t)=>{
+      const k = Math.min(1,(t-t0)/dur), e = 1-Math.pow(1-k,3);
+      el.textContent = Math.round(target*e);
+      if(k<1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    io.unobserve(el);
+  });
+},{threshold:.6});
+document.querySelectorAll('.num').forEach(n=>io.observe(n));
+
+// ring highlight by chapter (41/178/96/2): pulse emissive on material groups is complex on one GLB;
+// instead: chapter light follows the camera band of the tower
+const chapLight = new THREE.PointLight(0xc49a4e, 40, 14, 2); scene.add(chapLight);
+
+const clock = new THREE.Clock();
+function tick(){
+  requestAnimationFrame(tick);
+  const dt = clock.getDelta();
+  mouse.x += (mouse.tx-mouse.x)*.05; mouse.y += (mouse.ty-mouse.y)*.05;
+
+  const p = ease(prog);
+  // camera descend
+  const y = THREE.MathUtils.lerp(H*.42, 2.2, p);
+  const rad = THREE.MathUtils.lerp(26, 10, p) + Math.sin(p*Math.PI)*2.5;
+  const ang = .78 + p*1.55 + mouse.x*.22;         // mouse orbits the camera slightly
+  camera.position.set(Math.cos(ang)*rad, y + mouse.y*-2.2, Math.sin(ang)*rad);
+  const lookY = THREE.MathUtils.lerp(TOWER_MID, Math.min(6, TOWER_MID), p) + mouse.y*.6;
+  camera.lookAt(0, lookY, 0);
+  sculpture.rotation.y += dt*.10;                  // slow idle turn
+  sculpture.rotation.z = mouse.x*.03;              // subtle tilt toward cursor
+
+  // chapter light rides down the tower
+  chapLight.position.set(Math.cos(ang+.5)*4, THREE.MathUtils.lerp(H, 1, p), Math.sin(ang+.5)*4);
+
+  renderer.render(scene, camera);
+}
+tick();
+
+addEventListener('resize', ()=>{
+  camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  scrollProg();
+});
+</script>
+</body>
+</html>

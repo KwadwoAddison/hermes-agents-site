@@ -1,10 +1,18 @@
 {
- "updated_at": "2026-09-16T00:32:53Z",
+ "updated_at": "2026-09-16T13:42:26Z",
  "unavailable_models": [
   "astra_m",
   "astra_h",
   "sol"
  ],
  "note": "codex 5-hour usage limit exhausted; Sol + Astra unavailable until reset",
- "tasks": []
+ "tasks": [
+  {
+   "id": "telegram:addis-other-tasks",
+   "active": true,
+   "task": "Deploying 3D demo (Weight of 276)",
+   "panel": "Hermes + Blender + three.js",
+   "stage": "ship"
+  }
+ ]
 }
