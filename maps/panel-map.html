@@ -14956,33 +14956,68 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
     });
   </script>
 
+
 <script id="live-overlay">
 (async function(){
+  const NS='http://www.w3.org/2000/svg';
+  function findNodeRect(id){ // locate node group by data-node-id
+    const g=document.querySelector('[data-node-id="'+id+'"]'); return g;
+  }
+  function setNodeState(id,state,labelOverride){
+    const g=findNodeRect(id); if(!g) return;
+    const rect=g.querySelector('rect'); if(!rect) return;
+    if(state==='down'){ rect.setAttribute('stroke','#8c2f39'); rect.setAttribute('stroke-width','3'); rect.setAttribute('stroke-dasharray','5,4'); rect.style.opacity='0.45';
+      let b=g.querySelector('.down-flag');
+      if(!b){ b=document.createElementNS(NS,'text'); b.setAttribute('class','down-flag'); b.setAttribute('y','-8'); b.setAttribute('text-anchor','middle'); b.setAttribute('fill','#e05a4f'); b.setAttribute('font-size','11'); b.setAttribute('font-weight','700'); g.appendChild(b);}
+      b.textContent='OFFLINE';
+    } else { rect.removeAttribute('stroke-dasharray'); rect.style.opacity='1'; const b=g.querySelector('.down-flag'); if(b) b.remove(); }
+  }
+  function setNodeLabel(id,label,sublabel){
+    const g=findNodeRect(id); if(!g) return;
+    const texts=g.querySelectorAll('text');
+    if(labelOverride && texts[0]) texts[0].textContent=label;
+  }
+  function pulseStage(id,on){
+    const g=findNodeRect(id); if(!g) return;
+    const rect=g.querySelector('rect'); if(!rect) return;
+    if(on){ rect.setAttribute('stroke','#2fbf8f'); rect.setAttribute('stroke-width','3');
+      if(!document.getElementById('livepulse')){ const st=document.createElementNS(NS,'style'); st.id='livepulse';
+        st.textContent='@keyframes livepulse{0%,100%{stroke-opacity:1}50%{stroke-opacity:.25}}';
+        document.querySelector('svg').appendChild(st);}
+      rect.style.animation='livepulse 1.6s ease-in-out infinite';
+    } else { rect.style.animation=''; }
+  }
+  async function jf(u){ const r=await fetch(u,{cache:'no-store'}); if(!r.ok) throw 0; return r.json(); }
   async function poll(){
     try{
-      const r = await fetch('live-status.json', {cache:'no-store'});
-      if(!r.ok) return;
-      const s = await r.json();
-      let el = document.getElementById('live-status-badge');
-      if(!el){
-        el = document.createElement('div'); el.id='live-status-badge';
-        el.style.cssText='position:fixed;top:12px;right:12px;z-index:9999;font:600 12px/1.5 -apple-system,sans-serif;background:#0f6b6b;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.4);max-width:360px';
-        document.body.appendChild(el);
-      }
-      const tasks = s.tasks || [];
-      const act = tasks.filter(t => t.active);
-      const ago = Math.max(0, Math.round((Date.now() - new Date(s.updated_at).getTime())/60000));
-      if(!act.length){
-        el.innerHTML = '○ <b>IDLE</b> · no chats working · checked ' + ago + ' min ago';
-        el.style.background = '#444';
-      } else {
-        el.innerHTML = '● <b>LIVE — ' + act.length + ' chat' + (act.length>1?'s':'') + ' working</b><br>' +
-          act.map(t => '· ' + (t.task||'working') + ' <span style="opacity:.7">[' + (t.id||'') + ']</span>').join('<br>');
-        el.style.background = '#0f6b6b';
-      }
+      const roster=await jf('roster.json'); const status=await jf('live-status.json');
+      const all={}; (roster.roles||[]).concat(roster.execution_pool||[]).forEach(m=>all[m.id]=m);
+      // a) availability
+      const down=new Set(status.unavailable_models||[]);
+      Object.entries(all).forEach(([id,m])=> setNodeState(id, down.has(id)?'down':'ok'));
+      // b) model switches: match panel map node ids to roster labels where names differ
+      (roster.execution_pool||[]).forEach(m=>{ if(m.label) setNodeLabel(m.id,m.label,true); });
+      // c) systematic movement: pulse the stage each active task is in
+      document.querySelectorAll('[data-stage-pulse]').forEach(e=>e.removeAttribute('data-stage-pulse'));
+      const stageNode={plan:'astra_m',execute:'team_pool',integrate:'astra_m',check:'sol',review:'astra_h',ship:'hermes'};
+      Object.values(stageNode).forEach(n=>pulseStage(n,false));
+      (status.tasks||[]).filter(t=>t.active&&t.stage).forEach(t=>{ pulseStage(stageNode[t.stage]||t.stage,true); });
+      // badge
+      let el=document.getElementById('live-status-badge');
+      if(!el){ el=document.createElement('div'); el.id='live-status-badge';
+        el.style.cssText='position:fixed;top:12px;right:12px;z-index:9999;font:600 12px/1.5 -apple-system,sans-serif;background:#0f6b6b;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.4);max-width:380px';
+        document.body.appendChild(el); }
+      const act=(status.tasks||[]).filter(t=>t.active);
+      const downList=(status.unavailable_models||[]);
+      const ago=Math.max(0,Math.round((Date.now()-new Date(status.updated_at).getTime())/60000));
+      let html='';
+      html += act.length ? ('● <b>LIVE — '+act.length+' chat'+(act.length>1?'s':'')+' working</b><br>'+act.map(t=>'· '+(t.task||'working')+' <span style="opacity:.7">['+(t.id||'')+']</span>').join('<br>')) : ('○ <b>IDLE</b> · no chats working');
+      if(downList.length) html += '<br><span style="color:#ffb3ab">⚠ '+downList.length+' model'+(downList.length>1?'s':'')+' offline: '+downList.join(', ')+'</span>';
+      html += '<br><span style="opacity:.7">checked '+ago+' min ago</span>';
+      el.innerHTML=html; el.style.background=act.length?'#0f6b6b':'#444';
     }catch(e){}
   }
-  poll(); setInterval(poll, 30000);
+  poll(); setInterval(poll,30000);
 })();
 </script></body>
 </html>

@@ -1,0 +1,178 @@
+{
+ "generated_at": "2026-09-16T00:32:19Z",
+ "roles": [
+  {
+   "id": "coordinator",
+   "label": "Astra medium",
+   "sublabel": "coordinate \u00b7 delegate",
+   "provider": "codex-cli",
+   "available": true
+  },
+  {
+   "id": "web_ui",
+   "label": "Astra HIGH",
+   "sublabel": "builds UI/UX directly",
+   "provider": "codex-cli",
+   "available": true
+  },
+  {
+   "id": "sol",
+   "label": "Sol high",
+   "sublabel": "independent checks",
+   "provider": "codex-cli",
+   "available": true
+  },
+  {
+   "id": "reviewer",
+   "label": "Astra HIGH",
+   "sublabel": "fresh-context review \u00b7 veto",
+   "provider": "codex-cli",
+   "available": true
+  }
+ ],
+ "execution_pool": [
+  {
+   "id": "glm53",
+   "label": "GLM 5.3",
+   "provider": "ollama cloud",
+   "available": true
+  },
+  {
+   "id": "glm53f",
+   "label": "GLM 5.3 Flash",
+   "provider": "ollama cloud",
+   "available": true
+  },
+  {
+   "id": "qwen38",
+   "label": "Qwen 3.8 Flash",
+   "provider": "openrouter",
+   "available": true
+  },
+  {
+   "id": "gem38",
+   "label": "Gemini 3.8 Flash",
+   "provider": "openrouter",
+   "available": true
+  },
+  {
+   "id": "ds4pro",
+   "label": "DS V4 Pro 0813",
+   "provider": "ollama cloud",
+   "available": true
+  },
+  {
+   "id": "ds41f",
+   "label": "DS V4.1 Flash",
+   "provider": "ollama cloud",
+   "available": true
+  },
+  {
+   "id": "hy4",
+   "label": "Hunyuan 4 Preview",
+   "provider": "openrouter",
+   "available": true
+  }
+ ],
+ "panels": [
+  {
+   "id": "team_pool",
+   "label": "Team pool",
+   "models": [
+    "glm53",
+    "glm53f",
+    "qwen38",
+    "gem38",
+    "ds4pro",
+    "ds41f",
+    "hy4"
+   ]
+  },
+  {
+   "id": "panel7",
+   "label": "Multimodal 7",
+   "models": [
+    "astra_m",
+    "sol",
+    "glm53f",
+    "glm53",
+    "gem38",
+    "ds4pro",
+    "ds41f"
+   ]
+  },
+  {
+   "id": "mbu",
+   "label": "MBU transcription",
+   "models": [
+    "sol",
+    "gem38",
+    "glm53f"
+   ]
+  },
+  {
+   "id": "invest",
+   "label": "Investment panel",
+   "models": [
+    "glm53",
+    "qwen38",
+    "gem38",
+    "ds4pro",
+    "ds41f",
+    "hy4"
+   ]
+  },
+  {
+   "id": "waf",
+   "label": "WAF 7 roles",
+   "models": [
+    "glm53",
+    "glm53f",
+    "qwen38",
+    "gem38",
+    "ds4pro",
+    "ds41f",
+    "hy4"
+   ]
+  },
+  {
+   "id": "trading",
+   "label": "Trading verdicts",
+   "models": [
+    "panel7"
+   ]
+  }
+ ],
+ "stages": [
+  {
+   "id": "plan",
+   "label": "1 \u00b7 Plan",
+   "detail": "Astra medium plans + delegates"
+  },
+  {
+   "id": "execute",
+   "label": "2 \u00b7 Execute",
+   "detail": "Panel executes the work"
+  },
+  {
+   "id": "integrate",
+   "label": "3 \u00b7 Integrate",
+   "detail": "Astra medium merges outputs"
+  },
+  {
+   "id": "check",
+   "label": "4 \u00b7 Check",
+   "detail": "Sol independent checks"
+  },
+  {
+   "id": "review",
+   "label": "5 \u00b7 Review",
+   "detail": "Astra high fresh-context verdict"
+  },
+  {
+   "id": "ship",
+   "label": "6 \u00b7 Ship",
+   "detail": "Verified deliverable"
+  }
+ ]
+}
