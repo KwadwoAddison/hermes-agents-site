@@ -233,6 +233,78 @@ document.querySelectorAll('.num').forEach(n=>io.observe(n));
 const clock = new THREE.Clock();
 const tmp = new THREE.Vector3();
 
+// ============ FORMATIONS (computed at load from real home positions) ============
+// Each ring gets 4 target formations; scroll crossfades between them with damped springs + stagger.
+// F0 tower = home. F1 CORE+SH+FIELD: cohort shells (fibonacci sphere). F2 HALO: tilted concentric disc. F3 FUNNEL: survival curve.
+function fibSphere(n, r, out){
+  const ga = Math.PI*(3-Math.sqrt(5));
+  for(let k=0;k<n;k++){
+    const y = 1 - (2*k+0.5)/n;
+    const rad = Math.sqrt(Math.max(0,1-y*y));
+    const a = ga*k;
+    out.push(new THREE.Vector3(Math.cos(a)*rad*r, y*r, Math.sin(a)*rad*r));
+  }
+}
+const targets = [];      // per ring: {core:V3, halo:V3, funnel:V3}
+let c24=0,cw1=0,cl=0,cu=0;
+function buildTargets(){
+  // count cohorts
+  rings.forEach(o=>{ const c=o.userData.cohort; if(c==='24h')c24++; else if(c==='week1')cw1++; else if(c==='later')cl++; else cu++; });
+  const core=[], mid=[], outer=[], misc=[];
+  fibSphere(c24, 2.2, core);          // dense dark heart
+  fibSphere(cw1, 6.5, mid);           // brass shell
+  fibSphere(cl, 11.5, outer);         // wide ink field
+  fibSphere(cu, 3.4, misc);           // glass pair near the heart (visible)
+  const slots={core:0,mid:0,outer:0,misc:0};
+  rings.forEach(o=>{
+    const c = o.userData.cohort, h = o.userData.home;
+    let t;
+    if(c==='24h') t = core[slots.core++];
+    else if(c==='week1') t = mid[slots.mid++];
+    else if(c==='later') t = outer[slots.outer++];
+    else t = misc[slots.misc++];
+    // F2 halo: one tilted disc, rings sorted by cohort radius: core→inner circles, week1→middle, later→outer rim; unknown floats above
+    // F3 funnel: y descends by global order, radius narrows with depth (survival funnel), unknown two escape upward
+    targets.push({core:t.clone()});
+  });
+  // halo + funnel targets
+  const tilt = new THREE.Matrix4().makeRotationFromEuler(new THREE.Euler(0.42, 0, 0.18));
+  let hi=0, fi=0;
+  const order = rings.map((o,i)=>i);
+  order.forEach((idx,k)=>{
+    const c = rings[idx].userData.cohort, h = rings[idx].userData.home;
+    // halo: concentric circles — radius by cohort, angle by position along tower (spiral)
+    const hr = c==='24h'? 2.0 : c==='week1'? 5.2 : c==='later'? 8.6 : 3.4;
+    const ha = (k*2.399) + c.length;             // golden angle spiral
+    const hv = new THREE.Vector3(Math.cos(ha)*hr, Math.sin(ha*0.7)*0.25, Math.sin(ha)*hr);
+    hv.applyMatrix4(tilt); hv.y += 6.5;          // tilt + raise above tower center
+    // funnel: descend, narrow
+    const f = k/order.length;
+    const fy = THREE.MathUtils.lerp(15, -4, f);
+    const fr = THREE.MathUtils.lerp(9, 1.1, Math.pow(f,0.8)) + Math.sin(k*12.9898)*0.4;
+    const fa = (k*2.399);
+    const fv = new THREE.Vector3(Math.cos(fa)*fr, fy, Math.sin(fa)*fr);
+    if(c==='unknown'){ fv.y = 18 + (slots.misc? 0:0); fv.multiplyScalar(0.5); fv.y = 17; }  // the 2 glass rings rise out of the funnel top
+    targets[idx].halo = hv;
+    targets[idx].funnel = fv;
+  });
+}
+
+// motion state per ring
+const springs = [];      // {cur:V3, vel:V3, delay}
+function initMotion(){
+  rings.forEach((o,i)=>{
+    const h = o.userData.home;
+    springs.push({cur:h.clone(), vel:new THREE.Vector3(), home:h.clone(),
+                  delay: (h.y/H)*0.9 + Math.random()*0.25,   // stagger by height → wave
+                  seed: o.userData.seed});
+    o.userData.tgt = {core: null, halo: null, funnel: null};
+  });
+  buildTargets();
+  rings.forEach((o,i)=>{ o.userData.tgt.core = targets[i].core; o.userData.tgt.halo = targets[i].halo; o.userData.tgt.funnel = targets[i].funnel; });
+}
+
+const V = THREE.MathUtils.lerp, SS = THREE.MathUtils.smoothstep;
 function tick(){
   requestAnimationFrame(tick);
   const dt = Math.min(clock.getDelta(), .05);
@@ -240,58 +312,58 @@ function tick(){
   mouse.x += (mouse.tx-mouse.x)*.045; mouse.y += (mouse.ty-mouse.y)*.045;
 
   const p = ease(prog);
-  // ---- camera: hero → pull back for the explode → close orbit → pull out at closing
-  const camY = THREE.MathUtils.lerp(H*.42, H*1.05, Math.sin(p*Math.PI)*.9 + p*.1) + mouse.y*-2.0;
-  const camR = THREE.MathUtils.lerp(26, 15, p) + Math.sin(p*Math.PI)*6;
-  const ang = .78 + p*2.2 + mouse.x*.25 + t*.02;
-  camera.position.set(Math.cos(ang)*camR, camY, Math.sin(ang)*camR);
-  camera.lookAt(0, THREE.MathUtils.lerp(H*.5, H*.35, p), 0);
+  // ---- camera: hero wide → swing through the cloud → low orbit for halo → descend the funnel → pull back
+  const camY = V(H*.42, 15, SS(p,.15,.45));
+  const camY2 = V(camY, 11, SS(p,.45,.75));          // halo: slight downangle on the disc
+  const camY3 = V(camY2, 6, SS(p,.75,.95));           // funnel: follow the descent
+  const camR = V(26, 17, SS(p,.15,.45));
+  const camR2 = V(camR, 19, SS(p,.45,.75));
+  const camR3 = V(camR2, 27, SS(p,.85,1));            // pull back for the reaggregation feel
+  const ang = .78 + p*2.0 + mouse.x*.25 + t*.015;
+  camera.position.set(Math.cos(ang)*camR3, camY3 + mouse.y*-1.6, Math.sin(ang)*camR3);
+  camera.lookAt(0, V(V(H*.5, H*.42, SS(p,.15,.45)), V(6.5, 2.5, SS(p,.45,.95)), SS(p,.45,.75)), 0);
 
-  // ---- SCROLL CHOREOGRAPHY (the actual movement) ----
-  // 0.00–0.15 tower stands, ripple runs through it
-  // 0.15–0.55 explode: rings fly outward into a tilted constellation, orbiting
-  // 0.55–0.85 cohorts separate into shells: dark core (24h), brass mid (week1), ink outer (later)
-  // 0.85–1.00 reaggregate into the tight tower again, camera pulls back
-  const explode  = THREE.MathUtils.smoothstep(p, .12, .5);       // 0→1
-  const shellify = THREE.MathUtils.smoothstep(p, .5, .85);       // 0→1
-  const regather = THREE.MathUtils.smoothstep(p, .88, 1);        // 0→1
+  // ---- formation crossfade weights (each holds a plateau, transitions overlap smoothly)
+  const w1 = SS(p, .13, .22) * (1 - SS(p, .43, .52));   // F1 shell-field
+  const w2 = SS(p, .48, .57) * (1 - SS(p, .78, .86));   // F2 halo
+  const w3 = SS(p, .83, .92);                            // F3 funnel (stays at end)
+  // tower weight = remainder
+  const w0 = Math.max(0, 1 - w1 - w2 - w3);
 
-  const e = explode * (1 - regather);
-  const orbitSpin = t * (0.22 + explode*.35);
+  // ripple in tower state
+  const rippleK = w0;
 
-  rings.forEach(o=>{
-    const h = o.userData.home, c = o.userData.cohort;
-    const seed = o.userData.seed;
-    // idle ripple: rings breathe radially, wave travels upward
-    const ripple = 1 + Math.sin(t*1.4 - h.y*0.22 + seed)*0.018*(1-e);
-    // base home position
-    tmp.copy(h).multiplyScalar(ripple);
-    if(e > 0){
-      // explode along orbit radius + swirl + individual float
-      const shell = c==='24h' ? .35 : c==='week1' ? .75 : 1;    // cohort shells
-      const amp = o.userData.amp * shell;
-      const ang = orbitSpin + seed;
-      const rad = tmp.set(
-        h.x + o.userData.orbitR.x*amp*e + o.userData.swirl.x*amp*e*Math.sin(ang),
-        h.y + (h.y-H/2)*0.10*e + Math.sin(t*.8+seed*2)*1.2*e,   // slight vertical spread + float
-        h.z + o.userData.orbitR.z*amp*e + o.userData.swirl.z*amp*e*Math.cos(ang)
-      );
-      // orbit rotation around Y axis
-      const r = Math.hypot(rad.x, rad.z), a = Math.atan2(rad.z, rad.x) + orbitSpin*(c==='later'?1:0.6);
-      o.position.set(Math.cos(a)*Math.hypot(rad.x,rad.z), rad.y, Math.sin(a)*Math.hypot(rad.x,rad.z));
-      o.rotation.z = Math.sin(t*.8 + seed)*.12*e;               // rings tilt while flying
-    } else {
-      o.position.copy(h).multiplyScalar(ripple);
-      o.rotation.z *= (1 - Math.min(1, dt*6));
-    }
+  rings.forEach((o, i)=>{
+    const s = springs[i], c = o.userData.cohort;
+    const k = 1 - Math.min(1, dt*3.2);                     // spring damping
+    // blended target
+    tmp.set(0,0,0);
+    // tower state: ripple wave rides the home positions
+    const rip = 1 + Math.sin(t*1.4 - s.home.y*0.22 + s.seed)*0.018;
+    tmp.set(s.home.x*rip*w0, s.home.y*w0, s.home.z*rip*w0);
+    tmp.addScaledVector(o.userData.tgt.core, w1);
+    tmp.addScaledVector(o.userData.tgt.halo, w2);
+    tmp.addScaledVector(o.userData.tgt.funnel, w3);
+    // stagger: each ring starts its spring after its delay relative to scroll velocity — approximate with continuous mix factor
+    // damped spring toward target
+    s.vel.multiplyScalar(0.86);
+    const dx = tmp.x - s.cur.x, dy = tmp.y - s.cur.y, dz = tmp.z - s.cur.z;
+    s.vel.x += dx*0.06; s.vel.y += dy*0.06; s.vel.z += dz*0.06;
+    s.cur.addScaledVector(s.vel, 1);
+    o.position.copy(s.cur);
+    // tilt rings while transitioning; level in tower
+    const moving = Math.min(1, s.vel.length()*2.5);
+    o.rotation.z = THREE.MathUtils.lerp(o.rotation.z, Math.sin(t*.8+s.seed)*.10*(1-w0), .08);
+    // idle ripple only in tower: handled via home scale in tmp above
   });
 
-  // whole sculpture slow idle + mouse tilt
-  sculpture.rotation.y = t*.06 + mouse.x*.05;
+  // funnel spin: entire sculpture slowly rotates in halo/funnel modes
+  sculpture.rotation.y = t*(0.05 + w2*0.12 + w3*0.2) + mouse.x*.05;
   sculpture.rotation.z = mouse.x*.02;
 
   renderer.render(scene, camera);
 }
+initMotion();
 tick();
 
 addEventListener('resize', ()=>{
