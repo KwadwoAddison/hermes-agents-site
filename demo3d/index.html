@@ -192,6 +192,7 @@ loader.load('./weight_of_276_v2.glb', (gltf)=>{
     o.userData.swirl = swirl;
     o.userData.amp = (c => c==='24h' ? 6 : c==='week1' ? 13 : 20)(o.userData.cohort); // shell radii
   });
+  initMotion();
   document.title='LOADED';
   document.getElementById('loadbar').style.width='100%';
   setTimeout(()=>{ const l=document.getElementById('load'); l.style.opacity=0; setTimeout(()=>l.remove(),900); }, 350);
@@ -284,7 +285,7 @@ function buildTargets(){
     const fr = THREE.MathUtils.lerp(9, 1.1, Math.pow(f,0.8)) + Math.sin(k*12.9898)*0.4;
     const fa = (k*2.399);
     const fv = new THREE.Vector3(Math.cos(fa)*fr, fy, Math.sin(fa)*fr);
-    if(c==='unknown'){ fv.y = 18 + (slots.misc? 0:0); fv.multiplyScalar(0.5); fv.y = 17; }  // the 2 glass rings rise out of the funnel top
+    if(c==='unknown'){ fv.y = 17.5; }  // the 2 glass rings rise out of the funnel throat
     targets[idx].halo = hv;
     targets[idx].funnel = fv;
   });
@@ -307,6 +308,7 @@ function initMotion(){
 const V = THREE.MathUtils.lerp, SS = THREE.MathUtils.smoothstep;
 function tick(){
   requestAnimationFrame(tick);
+  if(!rings.length) return;   // wait for GLB
   const dt = Math.min(clock.getDelta(), .05);
   const t = clock.elapsedTime;
   mouse.x += (mouse.tx-mouse.x)*.045; mouse.y += (mouse.ty-mouse.y)*.045;
@@ -363,7 +365,6 @@ function tick(){
 
   renderer.render(scene, camera);
 }
-initMotion();
 tick();
 
 addEventListener('resize', ()=>{
