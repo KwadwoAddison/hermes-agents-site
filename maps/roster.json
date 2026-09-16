@@ -6,28 +6,28 @@
    "label": "Astra medium",
    "sublabel": "coordinate \u00b7 delegate",
    "provider": "codex-cli",
-   "available": true
+   "available": false
   },
   {
    "id": "web_ui",
    "label": "Astra HIGH",
    "sublabel": "builds UI/UX directly",
    "provider": "codex-cli",
-   "available": true
+   "available": false
   },
   {
    "id": "sol",
    "label": "Sol high",
    "sublabel": "independent checks",
    "provider": "codex-cli",
-   "available": true
+   "available": false
   },
   {
    "id": "reviewer",
    "label": "Astra HIGH",
    "sublabel": "fresh-context review \u00b7 veto",
    "provider": "codex-cli",
-   "available": true
+   "available": false
   }
  ],
  "execution_pool": [
@@ -45,7 +45,7 @@
   },
   {
    "id": "qwen38",
-   "label": "Qwen 4 Flash",
+   "label": "Qwen 3.8 Flash",
    "provider": "openrouter",
    "available": true
   },
@@ -174,5 +174,6 @@
    "label": "6 \u00b7 Ship",
    "detail": "Verified deliverable"
   }
- ]
+ ],
+ "codex_quota_exhausted_until": "~5h from 00:35 GMT 16 Sep"
 }

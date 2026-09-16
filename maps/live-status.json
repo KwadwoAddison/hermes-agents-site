@@ -1,22 +1,10 @@
 {
- "updated_at": "2026-09-16T00:32:40Z",
+ "updated_at": "2026-09-16T00:32:53Z",
  "unavailable_models": [
-  "qwen38"
+  "astra_m",
+  "astra_h",
+  "sol"
  ],
- "tasks": [
-  {
-   "id": "telegram:home",
-   "active": true,
-   "task": "Deck statistics rebuild",
-   "panel": "Astra + Sol + pool",
-   "stage": "review"
-  },
-  {
-   "id": "telegram:addis-other-tasks",
-   "active": true,
-   "task": "Map v3 wiring",
-   "panel": "Hermes + Archify",
-   "stage": "execute"
-  }
- ]
+ "note": "codex 5-hour usage limit exhausted; Sol + Astra unavailable until reset",
+ "tasks": []
 }
