@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><script>window.__err=[];window.addEventListener("error",e=>{document.title="ERR:"+String(e.message||e).slice(0,120);});</script>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Weight of 276 — a data sculpture</title>
 <style>
   :root{
-    --bg:#0b0c0e; --ink:#e8e4da; --dim:#9a958a; --brass:#c49a4e; --teal:#3fbdb8; --crimson:#c25a50;
+    --bg:#0b0c0e; --ink:#e8e4da; --dim:#9a958a; --brass:#c49a4e; --teal:#3fbdb8;
     --serif:'Iowan Old Style','Palatino Linotype',Georgia,serif; --sans:-apple-system,'Helvetica Neue',sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:auto}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);overflow-x:hidden}
   #stage{position:fixed;inset:0;z-index:0}
   canvas{display:block}
@@ -30,7 +29,6 @@
     animation:drop 2.2s ease-in-out infinite}
   @keyframes drop{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}
     56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-  /* chapters */
   .chapter{justify-content:flex-end;padding-bottom:16vh}
   .chapter .k{font:600 11px/1 var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
   .chapter h2{font-family:var(--serif);font-weight:500;font-size:clamp(38px,5.6vw,72px);line-height:1.04}
@@ -39,7 +37,6 @@
   .ghost{position:absolute;right:clamp(24px,8vw,130px);top:50%;transform:translateY(-50%);
     font-family:var(--serif);font-size:clamp(120px,22vw,300px);line-height:1;color:transparent;
     -webkit-text-stroke:1px rgba(196,154,78,.16);font-variant-numeric:tabular-nums;user-select:none}
-  /* closing */
   .closing{justify-content:center;align-items:center;text-align:center}
   .closing h2{font-family:var(--serif);font-weight:500;font-size:clamp(40px,6vw,84px);line-height:1.06;max-width:18ch}
   .closing h2 em{font-style:normal;color:var(--brass)}
@@ -63,7 +60,8 @@
     <div class="eyebrow">Kath · MbU · Verified cohort · 2026</div>
     <h1>The weight of <span class="num" data-count="276">0</span></h1>
     <p class="lede">Two hundred and seventy-six rings. One for every infant death recorded in the
-      neonatal unit audit. A sculpture you can turn in your hand — built from the register itself.</p>
+      neonatal unit audit. A sculpture you can open with your scroll — it comes apart, shows
+      its cohorts, and rebuilds itself.</p>
     <div class="rule"></div>
   </div>
   <div class="scrollcue">Scroll · the tower opens</div>
@@ -73,8 +71,8 @@
   <div class="inner">
     <div class="k">Within 24 hours</div>
     <h2><em class="num" data-count="41">0</em> never left their first day.</h2>
-    <p>The densest, darkest rings — tightened at the base of the stack. Fifteen percent of the
-      cohort died within twenty-four hours of admission.</p>
+    <p>The densest, darkest rings — pulled toward the center, pressed together at the heart of
+      the cloud. Fifteen percent of the cohort died within twenty-four hours.</p>
   </div>
   <div class="ghost">41</div>
 </section>
@@ -83,8 +81,8 @@
   <div class="inner">
     <div class="k">The first week</div>
     <h2><em class="num" data-count="178">0</em> within one week.</h2>
-    <p>Brass rings — 65 percent of all recorded ages fall inside seven days. The tower's warm
-      metal is the shape of that first week.</p>
+    <p>Brass rings — 65 percent of all recorded ages fall inside seven days. As you scroll
+      they drift outward into a slow orbit around the dark core.</p>
   </div>
   <div class="ghost">178</div>
 </section>
@@ -93,7 +91,7 @@
   <div class="inner">
     <div class="k">After the first week</div>
     <h2><em class="num" data-count="96">0</em> lived past seven days.</h2>
-    <p>Ink rings, full radius — the longest survivors of the cohort, still far too many.</p>
+    <p>Ink rings, full radius — they ride the outer orbit, circling the sculpture.</p>
   </div>
   <div class="ghost">96</div>
 </section>
@@ -102,8 +100,8 @@
   <div class="inner">
     <div class="k">Unrecorded</div>
     <h2><em class="num" data-count="2">0</em> ages were never written down.</h2>
-    <p>Near the base, a glass ring with a teal seam: the two deaths whose age at death the
-      register does not carry. A record-keeping gap you can see.</p>
+    <p>A glass ring with a teal seam — the two deaths whose age at death the register does
+      not carry. A record-keeping gap you can see.</p>
   </div>
   <div class="ghost">2</div>
 </section>
@@ -113,14 +111,15 @@
     <div class="eyebrow" style="letter-spacing:.34em">An association, not proof of cause</div>
     <h2>Every ring is a record.<br>Not a statistic.</h2>
     <p>Data sculpture generated from the verified neonatal audit cohort — 1,828 admissions,
-      276 deaths. Built with Blender + three.js; the model in the background is the actual
-      geometry, not a video.</p>
+      276 deaths. The model in the background is the actual geometry, not a video.</p>
   </div>
 </section>
 
 <div class="credit">276 · Blender → glTF → WebGL</div>
 
 <div id="load"><div class="t">Assembling 276 rings</div><div class="bar"><i id="loadbar"></i></div></div>
+
+<script>window.addEventListener('error', e => { document.title = 'ERR:' + String(e.message || e).slice(0, 100); });</script>
 
 <script type="importmap">
 {"imports":{"three":"./three.module.min.js"}}
@@ -139,51 +138,73 @@ renderer.toneMappingExposure = 1.15;
 stage.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x0b0c0e, 0.028);
-const camera = new THREE.PerspectiveCamera(38, innerWidth/innerHeight, .1, 200);
+scene.fog = new THREE.FogExp2(0x0b0c0e, 0.02);
+const camera = new THREE.PerspectiveCamera(38, innerWidth/innerHeight, .1, 300);
 
-// lights (match the render's studio mood)
-scene.add(new THREE.AmbientLight(0x334, 1.2));
+scene.add(new THREE.AmbientLight(0x333344, 1.2));
 const key = new THREE.DirectionalLight(0xfff2dc, 2.6); key.position.set(-8, 14, -6); scene.add(key);
 const rim = new THREE.DirectionalLight(0xc49a4e, 2.2); rim.position.set(9, 6, 8); scene.add(rim);
 const fill = new THREE.DirectionalLight(0x3fbdb8, .5); fill.position.set(0, -6, 6); scene.add(fill);
 
-// sculpture group
+// ---- sculpture: every ring gets its own transform ----
 const sculpture = new THREE.Group(); scene.add(sculpture);
-const H = 33.67;            // tower height from build
-const TOWER_MID = H/2;
+const H = 33.67;
 
-// floor reflection fake: dark disc
 const floor = new THREE.Mesh(
   new THREE.CircleGeometry(40, 48),
   new THREE.MeshStandardMaterial({color:0x08090b, roughness:.42, metalness:.55})
 );
 floor.rotation.x = -Math.PI/2; floor.position.y = -0.45; scene.add(floor);
 
-// load GLB (DRACO)
-const draco = new DRACOLoader();
-draco.setDecoderPath('./draco/');
+const draco = new DRACOLoader(); draco.setDecoderPath('./draco/');
 const loader = new GLTFLoader(); loader.setDRACOLoader(draco);
-let ringsReady = false;
-loader.load('./weight_of_276.glb', (gltf)=>{ document.title='LOADED';
+
+const rings = [];      // {mesh, i, cohort, home:Vector3, dir:Vector3, phase}
+loader.load('./weight_of_276_v2.glb', (gltf)=>{
   const model = gltf.scene;
-  // center tower at origin, base at y=0
   const box = new THREE.Box3().setFromObject(model);
   model.position.y = -box.min.y;
   sculpture.add(model);
-  ringsReady = true;
-  document.getElementById('loadbar').style.width = '100%';
-  setTimeout(()=>{ const l=document.getElementById('load'); l.style.opacity=0; setTimeout(()=>l.remove(), 900); }, 350);
-}, (ev)=>{ if(ev.total) document.getElementById('loadbar').style.width = Math.round(ev.loaded/ev.total*90)+'%'; }, (err)=>{ document.title='LOADFAIL:'+String(err).slice(0,80); });
 
-// ---- interaction state ----
+  // classify every mesh by name
+  model.traverse(o=>{
+    if(!o.isMesh) return;
+    let cohort = 'later';
+    if(/ring_24h/.test(o.name)) cohort='24h';
+    else if(/ring_week1/.test(o.name)) cohort='week1';
+    else if(/ring_unknown/.test(o.name)) cohort='unknown';
+    const wp = new THREE.Vector3(); o.getWorldPosition(wp);
+    const home = wp.clone();
+    // explosion direction: outward from tower axis + slight z jitter
+    o.userData.home = home;
+    o.userData.cohort = cohort;
+    o.userData.seed = (home.y*0.61 + (cohort==='week1'?2.1:cohort==='24h'?0:4.2)) % 6.283;
+    rings.push(o);
+  });
+  // precompute orbit dirs from position (radial + vertical swirl)
+  rings.forEach(o=>{
+    const h = o.userData.home;
+    const rad = new THREE.Vector3(h.x || (Math.random()*.2), 0, h.z || (Math.random()*.2));
+    if(rad.lengthSq() < 1e-6) rad.set(1,0,0);
+    rad.normalize();
+    const swirl = new THREE.Vector3(-rad.z, 0.15, rad.x).normalize();
+    o.userData.orbitR = rad;
+    o.userData.swirl = swirl;
+    o.userData.amp = (c => c==='24h' ? 6 : c==='week1' ? 13 : 20)(o.userData.cohort); // shell radii
+  });
+  document.title='LOADED';
+  document.getElementById('loadbar').style.width='100%';
+  setTimeout(()=>{ const l=document.getElementById('load'); l.style.opacity=0; setTimeout(()=>l.remove(),900); }, 350);
+}, (ev)=>{ if(ev.total) document.getElementById('loadbar').style.width = Math.round(ev.loaded/ev.total*90)+'%'; },
+   ()=>{ document.title='LOADFAIL'; });
+
+// ---- interaction ----
 const mouse = {x:0, y:0, tx:0, ty:0};
 addEventListener('pointermove', e=>{
   mouse.tx = (e.clientX/innerWidth - .5)*2;
   mouse.ty = (e.clientY/innerHeight - .5)*2;
 });
 
-// scroll progress 0..1
 let prog = 0;
 function scrollProg(){
   const max = document.body.scrollHeight - innerHeight;
@@ -193,12 +214,12 @@ addEventListener('scroll', scrollProg, {passive:true}); scrollProg();
 
 function ease(t){ return t<.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; }
 
-// count-up numbers when visible
+// count-up
 const io = new IntersectionObserver(es=>{
   es.forEach(en=>{
     if(!en.isIntersecting) return;
     const el = en.target, target = +el.dataset.count, dur = 1400, t0 = performance.now();
-    const tick = (t)=>{
+    const tick = t=>{
       const k = Math.min(1,(t-t0)/dur), e = 1-Math.pow(1-k,3);
       el.textContent = Math.round(target*e);
       if(k<1) requestAnimationFrame(tick);
@@ -209,29 +230,65 @@ const io = new IntersectionObserver(es=>{
 },{threshold:.6});
 document.querySelectorAll('.num').forEach(n=>io.observe(n));
 
-// ring highlight by chapter (41/178/96/2): pulse emissive on material groups is complex on one GLB;
-// instead: chapter light follows the camera band of the tower
-const chapLight = new THREE.PointLight(0xc49a4e, 40, 14, 2); scene.add(chapLight);
-
 const clock = new THREE.Clock();
+const tmp = new THREE.Vector3();
+
 function tick(){
   requestAnimationFrame(tick);
-  const dt = clock.getDelta();
-  mouse.x += (mouse.tx-mouse.x)*.05; mouse.y += (mouse.ty-mouse.y)*.05;
+  const dt = Math.min(clock.getDelta(), .05);
+  const t = clock.elapsedTime;
+  mouse.x += (mouse.tx-mouse.x)*.045; mouse.y += (mouse.ty-mouse.y)*.045;
 
   const p = ease(prog);
-  // camera descend
-  const y = THREE.MathUtils.lerp(H*.42, 2.2, p);
-  const rad = THREE.MathUtils.lerp(26, 10, p) + Math.sin(p*Math.PI)*2.5;
-  const ang = .78 + p*1.55 + mouse.x*.22;         // mouse orbits the camera slightly
-  camera.position.set(Math.cos(ang)*rad, y + mouse.y*-2.2, Math.sin(ang)*rad);
-  const lookY = THREE.MathUtils.lerp(TOWER_MID, Math.min(6, TOWER_MID), p) + mouse.y*.6;
-  camera.lookAt(0, lookY, 0);
-  sculpture.rotation.y += dt*.10;                  // slow idle turn
-  sculpture.rotation.z = mouse.x*.03;              // subtle tilt toward cursor
+  // ---- camera: hero → pull back for the explode → close orbit → pull out at closing
+  const camY = THREE.MathUtils.lerp(H*.42, H*1.05, Math.sin(p*Math.PI)*.9 + p*.1) + mouse.y*-2.0;
+  const camR = THREE.MathUtils.lerp(26, 15, p) + Math.sin(p*Math.PI)*6;
+  const ang = .78 + p*2.2 + mouse.x*.25 + t*.02;
+  camera.position.set(Math.cos(ang)*camR, camY, Math.sin(ang)*camR);
+  camera.lookAt(0, THREE.MathUtils.lerp(H*.5, H*.35, p), 0);
 
-  // chapter light rides down the tower
-  chapLight.position.set(Math.cos(ang+.5)*4, THREE.MathUtils.lerp(H, 1, p), Math.sin(ang+.5)*4);
+  // ---- SCROLL CHOREOGRAPHY (the actual movement) ----
+  // 0.00–0.15 tower stands, ripple runs through it
+  // 0.15–0.55 explode: rings fly outward into a tilted constellation, orbiting
+  // 0.55–0.85 cohorts separate into shells: dark core (24h), brass mid (week1), ink outer (later)
+  // 0.85–1.00 reaggregate into the tight tower again, camera pulls back
+  const explode  = THREE.MathUtils.smoothstep(p, .12, .5);       // 0→1
+  const shellify = THREE.MathUtils.smoothstep(p, .5, .85);       // 0→1
+  const regather = THREE.MathUtils.smoothstep(p, .88, 1);        // 0→1
+
+  const e = explode * (1 - regather);
+  const orbitSpin = t * (0.22 + explode*.35);
+
+  rings.forEach(o=>{
+    const h = o.userData.home, c = o.userData.cohort;
+    const seed = o.userData.seed;
+    // idle ripple: rings breathe radially, wave travels upward
+    const ripple = 1 + Math.sin(t*1.4 - h.y*0.22 + seed)*0.018*(1-e);
+    // base home position
+    tmp.copy(h).multiplyScalar(ripple);
+    if(e > 0){
+      // explode along orbit radius + swirl + individual float
+      const shell = c==='24h' ? .35 : c==='week1' ? .75 : 1;    // cohort shells
+      const amp = o.userData.amp * shell;
+      const ang = orbitSpin + seed;
+      const rad = tmp.set(
+        h.x + o.userData.orbitR.x*amp*e + o.userData.swirl.x*amp*e*Math.sin(ang),
+        h.y + (h.y-H/2)*0.10*e + Math.sin(t*.8+seed*2)*1.2*e,   // slight vertical spread + float
+        h.z + o.userData.orbitR.z*amp*e + o.userData.swirl.z*amp*e*Math.cos(ang)
+      );
+      // orbit rotation around Y axis
+      const r = Math.hypot(rad.x, rad.z), a = Math.atan2(rad.z, rad.x) + orbitSpin*(c==='later'?1:0.6);
+      o.position.set(Math.cos(a)*Math.hypot(rad.x,rad.z), rad.y, Math.sin(a)*Math.hypot(rad.x,rad.z));
+      o.rotation.z = Math.sin(t*.8 + seed)*.12*e;               // rings tilt while flying
+    } else {
+      o.position.copy(h).multiplyScalar(ripple);
+      o.rotation.z *= (1 - Math.min(1, dt*6));
+    }
+  });
+
+  // whole sculpture slow idle + mouse tilt
+  sculpture.rotation.y = t*.06 + mouse.x*.05;
+  sculpture.rotation.z = mouse.x*.02;
 
   renderer.render(scene, camera);
 }
