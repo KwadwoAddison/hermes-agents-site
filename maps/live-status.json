@@ -1,6 +1,11 @@
 {
- "active": false,
- "current_task": "idle \u2014 no work running",
- "panel": "",
- "updated_at": "2026-09-16T00:28:41Z"
+ "updated_at": "2026-09-16T00:28:55Z",
+ "tasks": [
+  {
+   "id": "telegram:addis-other-tasks",
+   "active": true,
+   "task": "Panel map live-status concurrency",
+   "panel": "Hermes + Archify"
+  }
+ ]
 }

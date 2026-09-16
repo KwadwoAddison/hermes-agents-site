@@ -14966,13 +14966,20 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
       let el = document.getElementById('live-status-badge');
       if(!el){
         el = document.createElement('div'); el.id='live-status-badge';
-        el.style.cssText='position:fixed;top:12px;right:12px;z-index:9999;font:600 12px/1.4 -apple-system,sans-serif;background:#0f6b6b;color:#fff;padding:8px 12px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.4);max-width:320px';
+        el.style.cssText='position:fixed;top:12px;right:12px;z-index:9999;font:600 12px/1.5 -apple-system,sans-serif;background:#0f6b6b;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.4);max-width:360px';
         document.body.appendChild(el);
       }
+      const tasks = s.tasks || [];
+      const act = tasks.filter(t => t.active);
       const ago = Math.max(0, Math.round((Date.now() - new Date(s.updated_at).getTime())/60000));
-      const dot = s.active ? '●' : '○';
-      el.innerHTML = dot + ' <b>' + (s.active?'LIVE':'IDLE') + '</b> · ' + (s.current_task||'no active work') + '<br><span style="opacity:.75">' + (s.panel||'') + ' · updated ' + ago + ' min ago</span>';
-      el.style.background = s.active ? '#0f6b6b' : '#444';
+      if(!act.length){
+        el.innerHTML = '○ <b>IDLE</b> · no chats working · checked ' + ago + ' min ago';
+        el.style.background = '#444';
+      } else {
+        el.innerHTML = '● <b>LIVE — ' + act.length + ' chat' + (act.length>1?'s':'') + ' working</b><br>' +
+          act.map(t => '· ' + (t.task||'working') + ' <span style="opacity:.7">[' + (t.id||'') + ']</span>').join('<br>');
+        el.style.background = '#0f6b6b';
+      }
     }catch(e){}
   }
   poll(); setInterval(poll, 30000);
