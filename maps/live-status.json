@@ -1,17 +1,4 @@
 {
- "updated_at": "2026-09-16T00:29:53Z",
- "tasks": [
-  {
-   "id": "telegram:addis-other-tasks",
-   "active": true,
-   "task": "Panel map live-status concurrency",
-   "panel": "Hermes + Archify"
-  },
-  {
-   "id": "telegram:home",
-   "active": true,
-   "task": "(simulated parallel test entry)",
-   "panel": "test"
-  }
- ]
+ "updated_at": "2026-09-16T00:30:53Z",
+ "tasks": []
 }
