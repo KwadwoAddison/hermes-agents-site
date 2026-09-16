@@ -45,7 +45,7 @@
   },
   {
    "id": "qwen38",
-   "label": "Qwen 3.8 Flash",
+   "label": "Qwen 4 Flash",
    "provider": "openrouter",
    "available": true
   },
