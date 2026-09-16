@@ -130,8 +130,14 @@ import { GLTFLoader } from './jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from './jsm/loaders/DRACOLoader.js';
 
 const stage = document.getElementById('stage');
-const renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true, powerPreference:'high-performance', failIfMajorPerformanceCaveat:false});
+} catch(e) {
+  document.getElementById('load').innerHTML = '<div class="t">This browser blocked WebGL — enable hardware acceleration in Chrome settings, or update Chrome, then reload.</div>';
+  throw e;
+}
+renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
 renderer.setSize(innerWidth, innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.15;
