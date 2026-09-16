@@ -15024,5 +15024,52 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
   }
   poll(); setInterval(poll,30000);
 })();
+</script>
+<script id="passport-members">
+(function(){
+  const ROSTER = {
+    panel7:  ["Astra (coordinator)", "Sol (vision lead)", "GLM 5.3 Flash (vision vote · ollama cloud)", "GLM 5.3 (text-only · ollama cloud)", "Gemini 3.8 Flash (vision · openrouter)", "DS V4 Pro 0813 (ollama cloud)", "DS V4.1 Flash (ollama cloud)"],
+    team_pool: ["GLM 5.3 · GLM 5.3 Flash (ollama cloud)", "Qwen 3.8 Flash · Gemini 3.8 Flash · Hunyuan 4 Preview (openrouter)", "DS V4 Pro 0813 · DS V4.1 Flash (ollama cloud)"],
+    mbu: ["Sol (vision lead, codex -i)", "Gemini 3.8 Flash (opencode)", "GLM 5.3 Flash (band-crop vision)"],
+    invest: ["6 models HIGH: GLM 5.3, Qwen 3.8, Gemini 3.8, DS V4 Pro, DS V4.1, Hunyuan 4", "Astra: one veto pass"],
+    waf: ["7 roles — Sol supervises; pool: GLM×2, Qwen, Gemini, DS×2, Hunyuan"],
+    trading: ["Multimodal panel challenge required for verdicts", "Dr. Addison owns intraday technicals"],
+    hermes: ["Addis — runs every chat and thread"],
+    astra_m: ["Codex gpt-6-astra (medium reasoning)"],
+    astra_h: ["Codex gpt-6-astra (high reasoning) — fresh context"],
+    sol: ["Codex gpt-5.6-sol (high reasoning)"],
+    skillgate: ["NVIDIA SkillSpector — scans skills before install"]
+  };
+  function label(id){ return id.replace(/_/g,' '); }
+  const mo = new MutationObserver(function(){
+    // which node is focused?
+    const hash = location.hash.match(/focus=([\w-]+)/);
+    let id = hash ? hash[1] : null;
+    const focused = document.querySelector('[data-node-id].is-focused, [data-node-id][data-focused]');
+    if(!id && focused) id = focused.getAttribute('data-node-id');
+    const title = document.getElementById('focus-label');
+    if(!id && title) {
+      const t = (title.textContent||'').trim().toLowerCase();
+      const alias = {'multimodal 7':'panel7','team pool':'team_pool','mbu panel':'mbu','investment':'invest','investment panel':'invest','waf':'waf','trading':'trading','hermes':'hermes','astra medium':'astra_m','astra high':'astra_h','sol':'sol','skillspector':'skillgate'};
+      id = alias[t] || null;
+    }
+    if(!id) return;
+    const members = ROSTER[id];
+    if(!members) return;
+    let box = document.getElementById('passport-members');
+    const passport = document.querySelector('.semantic-passport-detail') ? document.querySelector('.semantic-passport-detail').closest('div,section') : null;
+    const meta = document.getElementById('focus-passport-meta');
+    if(!meta) return;
+    if(!box){
+      box = document.createElement('div'); box.id='passport-members';
+      box.style.cssText='margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.14)';
+      meta.parentNode.insertBefore(box, meta.nextSibling);
+    }
+    box.innerHTML = '<div style="font:700 10px/1.4 -apple-system,sans-serif;letter-spacing:.12em;text-transform:uppercase;opacity:.65;margin-bottom:6px">Members — '+members.length+'</div>' +
+      '<ul style="margin:0;padding:0;list-style:none;font:500 12px/1.7 -apple-system,sans-serif">' +
+      members.map(m=>'<li style="padding:2px 0">· '+m+'</li>').join('') + '</ul>';
+  });
+  mo.observe(document.documentElement, {subtree:true, childList:true, attributes:true, attributeFilter:['hidden','class']});
+})();
 </script></body>
 </html>
